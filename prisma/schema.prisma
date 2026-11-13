@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  discordId     String   @unique
+  username      String
+  avatar        String?
+  minecraftNick String?
+  role          String   @default("PLAYER") // PLAYER, STAFF, ADMIN
+  createdAt     DateTime @default(now())
+  tickets       Ticket[]
+  orders        Order[]
+}
+
+model Ticket {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  discordThreadId String?  @unique
+  category        String   // STORE, SUPPORT, REPORT
+  status          String   @default("OPEN") // OPEN, CLOSED
+  createdAt       DateTime @default(now())
+}
+
+model Order {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  productName String   // Ex: VIP, VIP+, VIP ZYRIUM
+  amount      Float
+  status      String   @default("PENDING") // PENDING, PAID, DELIVERED
+  createdAt   DateTime @default(now())
+}
