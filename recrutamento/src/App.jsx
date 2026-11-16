@@ -11,7 +11,7 @@ import { AlertTriangle, ChevronDown, Loader2, Send, Shield } from "lucide-react"
      formulários ${DISCORD_CHANNEL_ID}):
      "https://seu-dominio.com/api/recruitment"  (ou "/api/recruitment")
    ============================================================ */
-const WEBHOOK_OR_BOT_API_URL = ""; // <-- COLOQUE AQUI
+const WEBHOOK_OR_BOT_API_URL = import.meta.env.VITE_API_URL || "";
 const DISCORD_CHANNEL_ID = "1570742963791859742";
 
 const SERVER = {
