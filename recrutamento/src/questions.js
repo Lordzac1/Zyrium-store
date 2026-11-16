@@ -1,0 +1,67 @@
+// ============================================================
+// PERGUNTAS — formato: [categoria, pergunta, tipo, placeholder | opções]
+// tipos: T = texto curto, A = parágrafo, S = seleção. Só a #42 é opcional.
+// ============================================================
+const T = "text", A = "textarea", S = "select";
+const C = [
+  "Informações Básicas",
+  "Disponibilidade e Rotina",
+  "Experiência e Conhecimento Técnico",
+  "Situações Práticas e Postura",
+  "Perfil Comportamental e Motivação",
+  "Compromisso e Termos Finais",
+];
+const RAW = [
+  [0, "Qual é o seu nome completo (ou como prefere ser chamado)?", T, "Ex: Lucas Silva"],
+  [0, "Qual é a sua idade atual?", T, "Ex: 16 anos"],
+  [0, "Qual é o seu Nickname exato no Minecraft?", T, "Ex: LordZac"],
+  [0, "Sua conta de Minecraft é Original ou Pirata?", S, ["Original", "Pirata"]],
+  [0, "Qual é o seu usuário e ID no Discord?", T, "Ex: lordzac#0000 (123456789012345678)"],
+  [0, "Em qual fuso horário ou estado você mora?", T, "Ex: São Paulo - SP (Horário de Brasília)"],
+  [0, "Você possui microfone funcional e disponibilidade para chamadas de voz?", S, ["Sim, uso sempre", "Sim, mas falo pouco", "Não possuo microfone"]],
+  [0, "Você pode gravar a tela do seu jogo para registrar provas de punições?", S, ["Sim, sem problemas", "Sim, mas com queda de FPS", "Não consigo gravar"]],
+  [1, "Quantas horas por dia você pode dedicar ao servidor durante a semana?", T, "Ex: 3 a 4 horas por dia"],
+  [1, "Quantas horas por dia você tem disponíveis nos finais de semana?", T, "Ex: 5 a 6 horas"],
+  [1, "Em quais períodos do dia você costuma estar mais ativo?", S, ["Manhã", "Tarde", "Noite", "Madrugada", "Horários variados"]],
+  [1, "Você estuda ou trabalha atualmente? Isso afeta seus horários?", A, "Descreva sua rotina..."],
+  [1, "Há quanto tempo você joga no ZYRIUM MC?", T, "Ex: Desde o lançamento / 2 meses"],
+  [1, "Você faz parte da equipe (Staff) de algum outro servidor atualmente?", S, ["Não", "Sim (especificar abaixo)"]],
+  [2, "Você já foi Staff em outros servidores de Minecraft? Se sim, quais e qual cargo ocupou?", A, "Cite os servidores, cargos e o motivo de saída..."],
+  [2, "Qual cargo você almeja inicialmente na equipe do ZYRIUM MC?", S, ["Ajudante (Helper)", "Moderador (Mod)", "Builder", "Configurador / Dev"]],
+  [2, "Quais comandos básicos de moderação você conhece e sabe utilizar?", A, "Ex: /ban, /tempban, /mute, /kick, /vanish, /invsee..."],
+  [2, "Você sabe realizar telagem (ScreenShare) para identificar clientes alternativos (hacks)?", S, ["Sim, tenho domínio completo", "Tenho noção básica", "Não sei fazer telagem"]],
+  [2, "Quais tipos de trapaças/hacks você consegue identificar visualmente durante o PvP ou exploração?", A, "Ex: KillAura, Reach, Fly, X-Ray, AutoClicker, Speed..."],
+  [2, "Você conhece as regras e mecânicas específicas do modo Semi-Anarchy (v1.21.11)?", A, "Explique o que é permitido e o que gera punição..."],
+  [2, "O que você faria se encontrasse um bug grave de duplicação de itens no servidor?", A, "Descreva o procedimento passo a passo..."],
+  [3, "Um jogador está xingando no chat global, mas não há superiores online. Como você age?", A],
+  [3, "Dois jogadores estão discutindo por causa de um roubo de base (griefing). Qual deve ser sua postura?", A],
+  [3, "Você suspeita que um jogador está usando X-Ray na mineração, mas não tem 100% de certeza. O que você faz?", A],
+  [3, "Um amigo próximo seu quebra uma regra grave do servidor na sua frente. Como você procede?", A],
+  [3, "Um jogador acusa você injustamente de abuso de poder no chat público. Como você reage?", A],
+  [3, "Você discorda de uma decisão tomada por um Moderador ou Administrador superior. O que você faz?", A],
+  [3, "Um player abre um ticket relatando que perdeu itens devido a um lag no servidor. Como você responde?", A],
+  [3, "Como você lida com jogadores que tentam provocar a equipe apenas para gerar confusão?", A],
+  [3, "Se você aplicar uma punição errada por engano, qual é a sua atitude imediata?", A],
+  [4, "Por que você deseja entrar para a equipe do ZYRIUM MC?", A, "Explique sua motivação..."],
+  [4, "O que diferencia você dos outros candidatos que estão preenchendo este formulário?", A],
+  [4, "Cite três qualidades suas que ajudariam o servidor no dia a dia.", T, "Ex: Paciência, imparcialidade, proatividade"],
+  [4, "Cite um defeito ou ponto que você precisa melhorar em si mesmo.", T, "Seja sincero..."],
+  [4, "Como você avalia seu nível de maturidade e controle emocional sob pressão?", S, ["Excelente (mantenho a calma sempre)", "Bom (raramente perco a paciência)", "Regular (estou melhorando)"]],
+  [4, "Você sabe trabalhar em equipe e aceitar críticas construtivas sobre seu desempenho?", A],
+  [4, "Você já foi punido (banido ou mutado) alguma vez no ZYRIUM MC? Se sim, por quê?", A],
+  [5, "Você entende que ser Staff não dá direito a itens gratuitos, modo criativo para benefício próprio ou vantagens no PvP?", S, ["Sim, compreendo perfeitamente", "Não"]],
+  [5, "Você concorda em manter sigilo absoluto sobre informações internas, chats da equipe e decisões administrativas?", S, ["Sim, concordo", "Não"]],
+  [5, "Você está ciente de que a inatividade sem aviso prévio pode resultar na remoção do cargo?", S, ["Sim, estou ciente", "Não"]],
+  [5, "Caso seja aprovado, você se compromete a participar das reuniões da equipe no Discord?", S, ["Sim, me comprometo", "Depende do horário"]],
+  [5, "Você tem alguma sugestão de melhoria para o ZYRIUM MC (servidor, loja ou Discord)?", A, "Opcional..."],
+  [5, "Deixe uma mensagem final ou consideração adicional para os avaliadores.", A, "Sua mensagem final..."],
+];
+
+export const QUESTIONS = RAW.map(([c, label, type, extra], i) => ({
+  id: i + 1,
+  category: C[c],
+  label,
+  type,
+  required: i + 1 !== 42,
+  ...(type === S ? { options: extra } : { placeholder: extra ?? "Sua resposta...", maxLength: type === A ? 1000 : 120 }),
+}));
